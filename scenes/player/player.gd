@@ -1,9 +1,10 @@
 extends CharacterBody2D
-@onready var animationPlayer: AnimatedSprite2D = $AnimatedSprite2D
+
+@onready var animation_player: AnimatedSprite2D = $AnimatedSprite2D
 @onready var run_collision: CollisionShape2D = $RunCollision
 @onready var duck_collision: CollisionShape2D = $DuckCollision
 
-enum {
+enum State {
 	IDLE,
 	RUN,
 	JUMP,
@@ -13,47 +14,69 @@ enum {
 const GRAVITY: int = 4200
 const JUMP_SPEED: int = -1000
 
-var state = RUN
+var current_state: State = State.RUN
 
 func _physics_process(delta: float) -> void:
-	match state:
-		IDLE: idle_state()
-		RUN: run_state()
-		JUMP: jump_state()
-		DUCK: duck_state()
-	
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
-		
+	
+	process_state()
+	
 	move_and_slide()
 
-func idle_state() -> void:
-	animationPlayer.play("Idle")
+func process_state() -> void:
+	match current_state:
+		State.IDLE:
+			process_idle()
+		State.RUN:
+			process_run()
+		State.JUMP:
+			process_jump()
+		State.DUCK:
+			process_duck()
+
+func process_idle() -> void:
+	animation_player.play("Idle")
 	
 	if Input.is_action_pressed("Duck"):
-		state = DUCK
-	
-func run_state() -> void:
-	animationPlayer.play("Run")
-	duck_collision.disabled = true
+		change_state(State.DUCK)
+
+func process_run() -> void:
+	animation_player.play("Run")
 	
 	if Input.is_action_just_pressed("Jump") and is_on_floor():
-		state = JUMP
 		velocity.y = JUMP_SPEED
-	
-	if Input.is_action_pressed("Duck"):
-		state = DUCK
-	
-func jump_state() -> void:
-	animationPlayer.play("Jump")
-	if is_on_floor():
-		state = RUN
+		change_state(State.JUMP)
+	elif Input.is_action_pressed("Duck"):
+		change_state(State.DUCK)
 
-func duck_state() -> void:
-	animationPlayer.play("Duck")
-	duck_collision.disabled = false
-	run_collision.disabled = true
+func process_jump() -> void:
+	animation_player.play("Jump")
+	
+	if is_on_floor():
+		change_state(State.RUN)
+
+func process_duck() -> void:
+	animation_player.play("Duck")
+	
 	if Input.is_action_just_released("Duck"):
-		state = RUN
-		duck_collision.disabled = true
-		run_collision.disabled = false
+		change_state(State.RUN)
+
+func change_state(new_state: State) -> void:
+	exit_state(current_state)
+
+	current_state = new_state
+	
+	enter_state(new_state)
+
+func exit_state(state: State) -> void:
+	match state:
+		State.DUCK:
+			duck_collision.disabled = true
+			run_collision.disabled = false
+
+func enter_state(state: State) -> void:
+	match state:
+		State.DUCK:
+			duck_collision.disabled = false
+			run_collision.disabled = true
