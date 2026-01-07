@@ -164,7 +164,7 @@ script = ExtResource("1_dovo2")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_75vfm")
-animation = &"Duck"
+animation = &"Idle"
 autoplay = "Idle"
 
 [node name="RunCollision" type="CollisionShape2D" parent="."]
