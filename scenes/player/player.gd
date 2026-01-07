@@ -12,9 +12,9 @@ enum State {
 }
 
 const GRAVITY: int = 4200
-const JUMP_SPEED: int = -1000
+const JUMP_SPEED: int = -900
 
-var current_state: State = State.RUN
+var current_state: State = State.IDLE
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
@@ -40,6 +40,8 @@ func process_idle() -> void:
 	
 	if Input.is_action_pressed("Duck"):
 		change_state(State.DUCK)
+	if Input.is_action_just_pressed("ui_accept"):
+		change_state(State.RUN)
 
 func process_run() -> void:
 	animation_player.play("Run")

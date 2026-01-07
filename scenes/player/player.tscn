@@ -168,10 +168,12 @@ animation = &"Duck"
 autoplay = "Idle"
 
 [node name="RunCollision" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-2, 0.5)
 shape = SubResource("RectangleShape2D_8afob")
 
 [node name="DuckCollision" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-0.5, 1.5)
 shape = SubResource("RectangleShape2D_dovo2")
 disabled = true
