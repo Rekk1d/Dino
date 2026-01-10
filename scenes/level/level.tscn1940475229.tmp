@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://8ri0ln7uhgui"]
+[gd_scene load_steps=9 format=4 uid="uid://8ri0ln7uhgui"]
 
 [ext_resource type="PackedScene" uid="uid://km0n1kg3j6e0" path="res://scenes/background/background.tscn" id="1_h3e3j"]
 [ext_resource type="Script" uid="uid://gexcgemc403i" path="res://scenes/level/level.gd" id="1_qkmgm"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://r3pmmnlr6pku" path="res://scenes/player/player.tscn" id="3_i166f"]
 [ext_resource type="PackedScene" uid="uid://c7j7hbctnu4av" path="res://scenes/ui/hud.tscn" id="5_hnne4"]
 [ext_resource type="Script" uid="uid://b1mqwgaj5mgqf" path="res://scenes/level/obstacle_manager.gd" id="6_vpf64"]
-[ext_resource type="PackedScene" uid="uid://cao8n5xonahm0" path="res://scenes/menu/game_over.tscn" id="7_wcngd"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_i166f"]
 texture = ExtResource("2_nbgty")
@@ -393,6 +392,3 @@ position = Vector2(192, 108)
 
 [node name="ObstacleManager" type="Node2D" parent="."]
 script = ExtResource("6_vpf64")
-
-[node name="GameOver" parent="." instance=ExtResource("7_wcngd")]
-process_mode = 2

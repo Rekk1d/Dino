@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal died
+
 @onready var animation_player: AnimatedSprite2D = $AnimatedSprite2D
 @onready var run_collision: CollisionShape2D = $RunCollision
 @onready var duck_collision: CollisionShape2D = $DuckCollision
@@ -15,7 +17,13 @@ const GRAVITY: int = 4200
 const JUMP_SPEED: int = -900
 
 var current_state: State = State.IDLE
+var health: int
+var max_health: int  = 3
 
+func _ready() -> void:
+	Signals.connect("take_damage", Callable(self, "_on_take_damage"))
+	health = max_health
+	
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
@@ -82,3 +90,11 @@ func enter_state(state: State) -> void:
 		State.DUCK:
 			duck_collision.disabled = false
 			run_collision.disabled = true
+			
+func _on_take_damage() -> void:
+	print('damage')
+	if health > 1:
+		health -= 1
+	else:
+		died.emit()
+		current_state = State.IDLE
