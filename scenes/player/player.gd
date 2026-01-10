@@ -97,4 +97,4 @@ func _on_take_damage() -> void:
 		health -= 1
 	else:
 		died.emit()
-		current_state = State.IDLE
+		change_state(State.IDLE)
