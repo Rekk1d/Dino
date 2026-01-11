@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://uw6nogdypgn5"]
+
+[ext_resource type="Texture2D" uid="uid://bp6t1fymus2u5" path="res://assets/ui/Heart Stage 1.png" id="1_4hkqd"]
+[ext_resource type="Script" uid="uid://cildr4balmda2" path="res://scenes/player/stats.gd" id="1_33ct0"]
+[ext_resource type="Texture2D" uid="uid://dggdgu8gyfd0u" path="res://assets/ui/Heart Stage 5.png" id="2_2wdgc"]
+
+[node name="Stats" type="CanvasLayer"]
+script = ExtResource("1_33ct0")
+heart_full = ExtResource("1_4hkqd")
+heart_empty = ExtResource("2_2wdgc")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 92.571495
+offset_bottom = 80.25404
+scale = Vector2(0.23186104, 0.1789045)
+
+[node name="HeartFull" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="HeartEmpty" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="HeartEmpty2" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2

@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 signal died
+signal health_changed(current_health: int)
 
 @onready var animation_player: AnimatedSprite2D = $AnimatedSprite2D
 @onready var run_collision: CollisionShape2D = $RunCollision
@@ -23,6 +24,7 @@ var max_health: int  = 3
 func _ready() -> void:
 	Signals.connect("take_damage", Callable(self, "_on_take_damage"))
 	health = max_health
+	health_changed.emit(health)
 	
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
@@ -92,9 +94,14 @@ func enter_state(state: State) -> void:
 			run_collision.disabled = true
 			
 func _on_take_damage() -> void:
-	print('damage')
 	if health > 1:
 		health -= 1
+		health_changed.emit(health)
 	else:
+		health_changed.emit(0)
 		died.emit()
-		change_state(State.IDLE)
+		
+func reset() -> void:
+	health = max_health
+	health_changed.emit(health)
+	change_state(State.IDLE)

@@ -51,6 +51,7 @@ func _ready() -> void:
 	new_game()
 
 func new_game() -> void:
+	player.reset()
 	player.position = PLAYER_START_POSITION
 	player.velocity = Vector2i(0, 0)
 	camera_2D.position = CAMERA_START_POSITION
@@ -122,11 +123,11 @@ func show_score() -> void:
 	hud.get_node("Score").text = "SCORE: " + str(score / SCORE_MODIFIER)
 	
 func _on_player_died() -> void:
+	check_high_score()
 	get_tree().paused = true
 	is_game_running = false
 	game_over.show()
 	game_over.get_node("RestartButton").pressed.connect(_on_restart_game)
-	check_high_score()
 
 func _on_restart_game():
 	new_game()
@@ -134,4 +135,4 @@ func _on_restart_game():
 func check_high_score() -> void:
 	if score > high_score:
 		high_score = score
-		hud.get_node("HighScore").text = "HIGH SCORE: " + str(high_score / SCORE_MODIFIER)
+		game_over.get_node("HighScore").text = "HIGH SCORE: " + str(high_score / SCORE_MODIFIER)

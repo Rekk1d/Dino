@@ -1,7 +1,8 @@
-[gd_scene load_steps=24 format=3 uid="uid://r3pmmnlr6pku"]
+[gd_scene load_steps=25 format=3 uid="uid://r3pmmnlr6pku"]
 
 [ext_resource type="Texture2D" uid="uid://bvb08058yw8bx" path="res://assets/dino/Dino.png" id="1_8afob"]
 [ext_resource type="Script" uid="uid://ckwju86em4reo" path="res://scenes/player/player.gd" id="1_dovo2"]
+[ext_resource type="PackedScene" uid="uid://uw6nogdypgn5" path="res://scenes/player/stats.tscn" id="3_gmlin"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8afob"]
 atlas = ExtResource("1_8afob")
@@ -168,12 +169,12 @@ animation = &"Idle"
 autoplay = "Idle"
 
 [node name="RunCollision" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(-2, 0.5)
 shape = SubResource("RectangleShape2D_8afob")
 
 [node name="DuckCollision" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(-0.5, 1.5)
 shape = SubResource("RectangleShape2D_dovo2")
 disabled = true
+
+[node name="Stats" parent="." instance=ExtResource("3_gmlin")]

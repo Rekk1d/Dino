@@ -27,3 +27,15 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_8hn3o")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_4njwu")
 theme_override_styles/hover = SubResource("StyleBoxFlat_tu1hx")
 text = "RESTART"
+
+[node name="HighScore" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -42.0
+offset_top = 72.0
+offset_right = 42.0
+offset_bottom = 95.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 12
+text = "HIGH SCORE:"

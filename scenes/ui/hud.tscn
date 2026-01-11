@@ -3,10 +3,10 @@
 [node name="HUD" type="CanvasLayer"]
 
 [node name="Score" type="Label" parent="."]
-offset_left = 8.0
-offset_top = 1.0
-offset_right = 64.0
-offset_bottom = 24.0
+offset_left = 310.0
+offset_right = 350.0
+offset_bottom = 16.0
+theme_override_font_sizes/font_size = 10
 text = "SCORE:"
 
 [node name="Start" type="Label" parent="."]
@@ -21,13 +21,5 @@ offset_right = 20.0
 offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_font_sizes/font_size = 12
 text = "PRESS SPACE TO START"
-
-[node name="HighScore" type="Label" parent="."]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -116.0
-offset_bottom = 23.0
-grow_horizontal = 0
-text = "HIGH SCORE:"
