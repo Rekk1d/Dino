@@ -1,18 +1,12 @@
 extends Node2D
 
-# Obstacles
-var box_scene = preload("res://scenes/obstacles/box.tscn")
-var barrel_scene = preload("res://scenes/obstacles/barrel.tscn")
-var bird_scene = preload("res://scenes/obstacles/bird.tscn")
-var obstacles_types := [box_scene, barrel_scene]
-var obstacles: Array
-var bird_heights = [125, 170]
 @onready var player: CharacterBody2D = $Player
 @onready var camera_2D: Camera2D = $Camera2D
 @onready var ground: TileMapLayer = $Ground
 @onready var hud: CanvasLayer = $HUD
-@onready var obstacle_manager: ObstacleManager = $ObstacleManager
+@onready var obstacle_manager: ObstaclesManager = $ObstaclesManager
 @onready var game_over: CanvasLayer = $GameOver
+@onready var potions_manager: PotionsManager = $PotionsManager
 
 const PLAYER_START_POSITION := Vector2i(25, 183)
 const CAMERA_START_POSITION := Vector2i(192, 108)
@@ -47,6 +41,7 @@ func _ready() -> void:
 	next_spawn_x = segment_width
 	
 	obstacle_manager.setup(camera_2D, player, self, ground_top_y, screen_size)
+	potions_manager.setup(camera_2D, player, self, ground_top_y, screen_size, obstacle_manager)
 	player.died.connect(_on_player_died)
 	new_game()
 
@@ -69,6 +64,7 @@ func new_game() -> void:
 	hud.get_node("Start").show()
 
 	obstacle_manager.reset()
+	potions_manager.reset()
 
 func _process(_delta: float) -> void:
 	if is_game_running:
@@ -78,6 +74,9 @@ func _process(_delta: float) -> void:
 		
 		obstacle_manager.update_difficulty(score, SPEED_MODIFIER)
 		obstacle_manager.generate_obstacles()
+		
+		if player.health != player.max_health:
+			potions_manager.generate_potions()
 		
 		player.position.x += speed
 		camera_2D.position.x += speed

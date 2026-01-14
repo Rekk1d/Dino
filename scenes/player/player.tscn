@@ -171,10 +171,10 @@ autoplay = "Idle"
 [node name="RunCollision" type="CollisionShape2D" parent="."]
 position = Vector2(-2, 0.5)
 shape = SubResource("RectangleShape2D_8afob")
+disabled = true
 
 [node name="DuckCollision" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 1.5)
 shape = SubResource("RectangleShape2D_dovo2")
-disabled = true
 
 [node name="Stats" parent="." instance=ExtResource("3_gmlin")]

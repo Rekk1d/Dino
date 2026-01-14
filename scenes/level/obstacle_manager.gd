@@ -1,5 +1,5 @@
 extends Node
-class_name ObstacleManager
+class_name ObstaclesManager
 
 # Obstacles
 var box_scene = preload("res://scenes/obstacles/box.tscn")
@@ -12,7 +12,7 @@ var bird_heights = [125, 170]
 # Constants
 const MIN_OBSTACLE_DISTANCE: int = 200
 const MAX_OBSTACLE_DISTANCE: int = 500
-const MAX_DIFFICULTY: int = 2
+const MAX_DIFFICULTY: int = 1
 
 # References
 var camera: Camera2D

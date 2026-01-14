@@ -23,6 +23,7 @@ var max_health: int  = 3
 
 func _ready() -> void:
 	Signals.connect("take_damage", Callable(self, "_on_take_damage"))
+	Signals.connect("health_recover", Callable(self, "_on_health_recover"))
 	health = max_health
 	health_changed.emit(health)
 	
@@ -100,6 +101,11 @@ func _on_take_damage() -> void:
 	else:
 		health_changed.emit(0)
 		died.emit()
+		
+func _on_health_recover() -> void:
+	if health != max_health:
+		health += 1
+		health_changed.emit(health)
 		
 func reset() -> void:
 	health = max_health

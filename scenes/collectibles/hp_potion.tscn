@@ -1,0 +1,54 @@
+[gd_scene load_steps=10 format=3 uid="uid://b70t8l8qgrhiv"]
+
+[ext_resource type="Texture2D" uid="uid://bpeat18uoffei" path="res://assets/collectibles/hpPotion/01.png" id="1_mbf6a"]
+[ext_resource type="Texture2D" uid="uid://di6eibu7jsba" path="res://assets/collectibles/hpPotion/02.png" id="2_rp7bp"]
+[ext_resource type="Texture2D" uid="uid://cd58bsbn6t7xv" path="res://assets/collectibles/hpPotion/03.png" id="3_qbs0t"]
+[ext_resource type="Texture2D" uid="uid://cwi7wc2q1j4rv" path="res://assets/collectibles/hpPotion/04.png" id="4_3qkbt"]
+[ext_resource type="Texture2D" uid="uid://drxwrwc57m4cd" path="res://assets/collectibles/hpPotion/05.png" id="5_hywja"]
+[ext_resource type="Texture2D" uid="uid://dpes38r5524jl" path="res://assets/collectibles/hpPotion/06.png" id="6_laayq"]
+[ext_resource type="Texture2D" uid="uid://vd1sj68p3fnl" path="res://assets/collectibles/hpPotion/07.png" id="7_mgvmh"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cysq5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_mbf6a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_rp7bp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_qbs0t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_3qkbt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_hywja")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_laayq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_mgvmh")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 12.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7y0ii"]
+radius = 5.0
+height = 18.0
+
+[node name="HpPotion" type="Area2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_cysq5")
+animation = &"Idle"
+autoplay = "Idle"
+frame_progress = 0.45010763
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_7y0ii")
