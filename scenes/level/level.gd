@@ -47,8 +47,8 @@ func _ready() -> void:
 
 func new_game() -> void:
 	player.reset()
-	player.position = PLAYER_START_POSITION
-	player.velocity = Vector2i(0, 0)
+	#player.position = PLAYER_START_POSITION
+	#player.velocity = Vector2i(0, 0)
 	camera_2D.position = CAMERA_START_POSITION
 	get_tree().paused = false
 	game_over.hide()
