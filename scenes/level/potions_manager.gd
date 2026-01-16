@@ -2,13 +2,16 @@ extends Node2D
 class_name PotionsManager
 
 var hp_potion = preload("res://scenes/collectibles/hp_potion.tscn")
+var shield_potion = preload("res://scenes/collectibles/shield_potion.tscn")
 
-var potion_types := [hp_potion]
+var potion_types := [hp_potion, shield_potion]
 var potions: Array
 
 # Constants
 const MIN_POTION_DISTANCE: int = 400 
 const MIN_DISTANCE_FROM_OBSTACLE: int = 100
+const HEALTH_POTION_SPAWN_CHANCE: float = 0.5
+const SHIELD_POTION_SPAWN_CHANCE: float = 0.3
 
 # References
 var camera: Camera2D
@@ -48,18 +51,17 @@ func generate_potions() -> void:
 			var potion_x = camera_right_edge + randf_range(100, 200)
 		
 			if is_position_safe(potion_x):
-				spawn_potion(potion_x)
+				var potion_type_to_spawn: PackedScene = null
+			
+				if player.health < player.max_health and randf() < HEALTH_POTION_SPAWN_CHANCE:
+					potion_type_to_spawn = hp_potion
+				elif randf() < SHIELD_POTION_SPAWN_CHANCE && !player.has_shield:
+					potion_type_to_spawn = shield_potion
+				
+				if potion_type_to_spawn != null:
+					spawn_potion_type(potion_x, potion_type_to_spawn)
 
-func is_position_safe(potion_x: float) -> bool:
-	for obstacle in obstacles_manager.obstacles:
-		if is_instance_valid(obstacle):
-			var distance = abs(obstacle.position.x - potion_x)
-			if distance < MIN_DISTANCE_FROM_OBSTACLE:
-				return false
-	return true
-
-func spawn_potion(potion_x: float) -> void:
-	var potion_type = potion_types[randi() % potion_types.size()]
+func spawn_potion_type(potion_x: float, potion_type: PackedScene) -> void:
 	var potion = potion_type.instantiate()
 	
 	var sprite: AnimatedSprite2D = potion.get_node("AnimatedSprite2D")
@@ -74,6 +76,14 @@ func spawn_potion(potion_x: float) -> void:
 	parent_node.add_child(potion)
 	potions.append(potion)
 	last_potion_x = potion_x
+	
+func is_position_safe(potion_x: float) -> bool:
+	for obstacle in obstacles_manager.obstacles:
+		if is_instance_valid(obstacle):
+			var distance = abs(obstacle.position.x - potion_x)
+			if distance < MIN_DISTANCE_FROM_OBSTACLE:
+				return false
+	return true
 
 func _on_potion_collected(body) -> void:
 	if body.name == player.name:
@@ -83,8 +93,8 @@ func _on_potion_collected(body) -> void:
 				if body in overlapping:
 					if potion.scene_file_path == hp_potion.resource_path:
 						Signals.emit_signal("health_recover")
-					# elif potion.scene_file_path == speed_potion.resource_path:
-					#     Signals.emit_signal("speed_boost")
+					elif potion.scene_file_path == shield_potion.resource_path:
+						Signals.emit_signal("get_shield")
 					potions.erase(potion)
 					potion.queue_free()
 					break

@@ -74,9 +74,8 @@ func _process(_delta: float) -> void:
 		
 		obstacle_manager.update_difficulty(score, SPEED_MODIFIER)
 		obstacle_manager.generate_obstacles()
-		
-		if player.health != player.max_health:
-			potions_manager.generate_potions()
+		potions_manager.generate_potions()
+			
 		
 		player.position.x += speed
 		camera_2D.position.x += speed

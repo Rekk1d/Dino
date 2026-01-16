@@ -16,14 +16,17 @@ enum State {
 
 const GRAVITY: int = 4200
 const JUMP_SPEED: int = -900
+const SHIELD_TIMER: int = 10
 
 var current_state: State = State.IDLE
 var health: int
-var max_health: int  = 3
+var max_health: int = 3
+var has_shield: bool = false
 
 func _ready() -> void:
 	Signals.connect("take_damage", Callable(self, "_on_take_damage"))
 	Signals.connect("health_recover", Callable(self, "_on_health_recover"))
+	Signals.connect("get_shield", Callable(self, "_on_get_shield"))
 	health = max_health
 	health_changed.emit(health)
 	
@@ -95,7 +98,11 @@ func enter_state(state: State) -> void:
 			run_collision.disabled = true
 			
 func _on_take_damage() -> void:
-	if health > 1:
+	if has_shield:
+		has_shield = false
+		animation_player.modulate = Color(1, 1, 1, 1) 
+		health_changed.emit(health)
+	elif health > 1:
 		health -= 1
 		health_changed.emit(health)
 	else:
@@ -106,6 +113,13 @@ func _on_health_recover() -> void:
 	if health != max_health:
 		health += 1
 		health_changed.emit(health)
+		
+func _on_get_shield() -> void:
+	has_shield = true
+	animation_player.modulate = Color(0.5, 0.8, 1, 1) 
+	await get_tree().create_timer(SHIELD_TIMER).timeout
+	has_shield = false
+	animation_player.modulate = Color(1, 1, 1, 1) 
 		
 func reset() -> void:
 	health = max_health

@@ -1,0 +1,54 @@
+[gd_scene load_steps=10 format=3 uid="uid://dl8rlepyjgf16"]
+
+[ext_resource type="Texture2D" uid="uid://klc3qu72nj40" path="res://assets/collectibles/shieldPotion/01.png" id="1_bne2v"]
+[ext_resource type="Texture2D" uid="uid://c6kddtt5uugkk" path="res://assets/collectibles/shieldPotion/02.png" id="2_rsv6s"]
+[ext_resource type="Texture2D" uid="uid://b78re2qotsoil" path="res://assets/collectibles/shieldPotion/03.png" id="3_gjkci"]
+[ext_resource type="Texture2D" uid="uid://bpv37vt8skq83" path="res://assets/collectibles/shieldPotion/04.png" id="4_l8uqv"]
+[ext_resource type="Texture2D" uid="uid://chrmb5c82qnfc" path="res://assets/collectibles/shieldPotion/05.png" id="5_qcas3"]
+[ext_resource type="Texture2D" uid="uid://cvuqfwo41pnm5" path="res://assets/collectibles/shieldPotion/06.png" id="6_3rsqr"]
+[ext_resource type="Texture2D" uid="uid://ddvw8nlipe3ig" path="res://assets/collectibles/shieldPotion/07.png" id="7_8j0dv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d6l4t"]
+size = Vector2(8, 15)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3qf3l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_bne2v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_rsv6s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_gjkci")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_l8uqv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_qcas3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_3rsqr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_8j0dv")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 12.0
+}]
+
+[node name="ShieldPotion" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_d6l4t")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_3qf3l")
+animation = &"Idle"
+autoplay = "Idle"
+frame = 5
+frame_progress = 0.74604356
